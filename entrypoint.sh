@@ -3,8 +3,10 @@
 if [ "$(find /etc/nginx/local-config -type f)" != "" ] 
 	 then 
 	sed -i 's%include /etc/nginx/naxsi.rules;%include /etc/nginx/naxsi.rules;\n\t\tinclude /etc/nginx/local-rules/*;%g' /etc/nginx/sites-enabled/default
-
 	 fi
+
+
+#Check if we are asked to process old logs
 
 if [ x${PROXY_REDIRECT_IP} = x"12.34.56.78" ] 
 	then
@@ -26,13 +28,6 @@ if [ x${LEARNING_MODE} != x"yes" ]
 	echo "LearningMode is enabled"
 fi
 
-if [ x${NAXSI_UI_PASSWORD} != x"test" ] 
-	then
-	sed -i "s/test/${NAXSI_UI_PASSWORD}/" /usr/local/naxsi-0.50/contrib/naxsi-ui/naxsi-ui.conf
-fi
-echo "naxsi-ui user: naxsi_web"
-echo "naxsi-ui password: ${NAXSI_UI_PASSWORD}"
-
 #Change owner for log files
 if [ -d /var/log/nginx ]
 	then
@@ -40,8 +35,4 @@ if [ -d /var/log/nginx ]
 	fi
 
 
-cd /usr/local/naxsi-0.50/contrib/naxsi-ui
-
-python nx_extract.py -c naxsi-ui.conf
-python nx_intercept.py -c naxsi-ui.conf
 nginx -c /etc/nginx/nginx.conf
