@@ -33,7 +33,7 @@ You want to run your WAF proxy behind your 10.0.0.1. Naxi-UI is in the host on p
                --env NAXSI_UI_PASSWORD="your_secret_pass" \
                -p 80:80 \
                -p 8081:8081 \
-               -d scollazo/docker-naxsi-waf-with-ui
+               -d scollazo/naxsi-waf-with-ui
 
 ## Get rules from naxsi ui
 
@@ -46,7 +46,7 @@ You can test your whitelists attaching them to the container:
                -v <local whitelist dir>:/etc/nginx/local-config/ \
                -p 80:80 \
                -p 8081:8081 \
-               -d scollazo/docker-naxsi-waf-with-ui
+               -d scollazo/naxsi-waf-with-ui
 
 ## Block attacks
 Once you are confident with your whitelist, you can disable learning mode, and start blocking attacks with:
@@ -54,11 +54,11 @@ Once you are confident with your whitelist, you can disable learning mode, and s
     docker run --env PROXY_REDIRECT_IP=10.0.0.1 \
                --env NAXSI_UI_PASSWORD="your_secret_pass" \
                --env LEARNING_MODE=no \
-               -v <logs dir>:/var/log/nginx/
+               -v <logs dir>:/var/log/nginx/ \
                -v <local whitelist dir>:/etc/nginx/local-config/ \
               -p 80:80 \
               -p 8081:8081 \
-              -d scollazo/docker-naxsi-waf-with-ui
+              -d scollazo/naxsi-waf-with-ui
 
 Your frontend website will be protected by naxsi using the whitelists you created, and log attack attempts or false positives in the naxsi ui.
 
