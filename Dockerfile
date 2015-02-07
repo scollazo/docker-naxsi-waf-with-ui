@@ -14,6 +14,7 @@ RUN apt-get update &&\
 RUN $(cd /usr/local/ && git clone https://github.com/nbs-system/naxsi.git && cd naxsi && git checkout 0.50 )
 
 #Fix compatibility issues
+#	NoResource was moved from twisted.web.error to twisted.web.resource , so we need to reflect that
 RUN sed -i 's/error import NoResource/resource import NoResource/g'  /usr/local/naxsi/contrib/naxsi-ui/nx_extract.py
 
 #Configuration files
