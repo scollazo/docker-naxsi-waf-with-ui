@@ -5,13 +5,10 @@ MAINTAINER Santiago Rodriguez <scollazo@gmail.com>
 #Config files and some ideas taken from
 # https://github.com/Epheo/docker-naxsi-proxy-waf/
 
-RUN apt-get update
+#Install needed packages from repos
+RUN apt-get update &&\
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nginx-naxsi python-twisted-web python-geoip git 
 
-#Install nginx-naxsi from repos
-RUN apt-get -y install nginx-naxsi 
-
-#naxsi-ui is installed from sources, so we need dependencies
-RUN apt-get install -y python-twisted-web python-geoip git
 
 #Get naxsi-ui from source
 RUN $(cd /usr/local/ && git clone https://github.com/nbs-system/naxsi.git && cd naxsi && git checkout 0.50 )
