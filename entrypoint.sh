@@ -26,9 +26,9 @@ if [ x${LEARNING_MODE} != x"yes" ]
 	echo "LearningMode is enabled"
 fi
 
-if ! [ x${NAXSI_UI_PASSWORD} != x"test" ] 
+if [ x${NAXSI_UI_PASSWORD} != x"test" ] 
 	then
-	sed -i "s/test/${NAXSI_UI_PASSWORD}/" /usr/local/naxsi/contrib/naxsi-ui/naxsi-ui.conf
+	sed -i "s/test/${NAXSI_UI_PASSWORD}/" /usr/local/naxsi-0.50/contrib/naxsi-ui/naxsi-ui.conf
 fi
 echo "naxsi-ui user: naxsi_web"
 echo "naxsi-ui password: ${NAXSI_UI_PASSWORD}"
@@ -40,7 +40,7 @@ if [ -d /var/log/nginx ]
 	fi
 
 
-cd /usr/local/naxsi/contrib/naxsi-ui
+cd /usr/local/naxsi-0.50/contrib/naxsi-ui
 
 python nx_extract.py -c naxsi-ui.conf
 python nx_intercept.py -c naxsi-ui.conf

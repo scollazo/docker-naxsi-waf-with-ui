@@ -7,20 +7,23 @@ MAINTAINER Santiago Rodriguez <scollazo@gmail.com>
 
 #Install needed packages from repos
 RUN apt-get update &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y nginx-naxsi python-twisted-web python-geoip git 
+    DEBIAN_FRONTEND=noninteractive apt-get install -y nginx-naxsi python-twisted-web python-geoip wget 
 
 
 #Get naxsi-ui from source
-RUN $(cd /usr/local/ && git clone https://github.com/nbs-system/naxsi.git && cd naxsi && git checkout 0.50 )
+RUN cd /usr/local/ && \
+    wget https://github.com/nbs-system/naxsi/archive/0.50.tar.gz && \
+    tar zxvf 0.50.tar.gz && \
+    rm 0.50.tar.gz 
 
 #Fix compatibility issues
 #	NoResource was moved from twisted.web.error to twisted.web.resource , so we need to reflect that
-RUN sed -i 's/error import NoResource/resource import NoResource/g'  /usr/local/naxsi/contrib/naxsi-ui/nx_extract.py
+RUN sed -i 's/error import NoResource/resource import NoResource/g'  /usr/local/naxsi-0.50/contrib/naxsi-ui/nx_extract.py
 
 #Configuration files
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
 ADD nginx/default /etc/nginx/sites-enabled/default
-ADD naxsi-ui/naxsi-ui.conf /usr/local/naxsi/contrib/naxsi-ui/naxsi-ui.conf
+ADD naxsi-ui/naxsi-ui.conf /usr/local/naxsi-0.50/contrib/naxsi-ui/naxsi-ui.conf
 RUN mkdir /etc/nginx/local-config
 RUN mkdir /var/log/naxsi
 
