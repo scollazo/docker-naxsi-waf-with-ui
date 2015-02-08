@@ -40,7 +40,7 @@ server {
         proxy_redirect              https://#proxy_redirect_ip#/ https://$host/;
 	
 	set $naxsi_extensive_log 1;
-
+	error_log /tmp/naxsi-log;
 	location / {
 		include /etc/nginx/naxsi.rules;
 		proxy_read_timeout              1800s;

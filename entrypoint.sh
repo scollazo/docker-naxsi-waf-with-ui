@@ -44,8 +44,7 @@ if [ -d /var/log/nginx ]
 	chown www-data.www-data /var/log/nginx -R
 	fi
 
-echo "naxsi log collection disabled"
-#nxtool.py --fifo=/var/log/nginx/naxsi-fifo > /dev/null 2>&1 &
+nxtool.py --fifo=/tmp/naxsi-log > /var/log/nginx/nxtool.log 2>&1 &
 nginx -c /etc/nginx/nginx.conf 
 
 
