@@ -59,7 +59,7 @@ RUN mkdir -p /var/lib/nginx/body
 
 #Change this and build the image to suit your needs by default, without needing to add parameters later
 ENV LEARNING_MODE yes
-ENV PROXY_REDIRECT_IP meneame.net
+ENV PROXY_REDIRECT_IP 12.34.56.78
 ENV NAXSI_UI_PASSWORD test
 
 #Ports
