@@ -28,6 +28,16 @@ if [ x${LEARNING_MODE} != x"yes" ]
 	echo "LearningMode is enabled"
 fi
 
+
+#if [ x${KIBANA_PASSWORD} != x"popo" ] 
+#	then
+#	#sed -i 's/LearningMode;//g' /etc/nginx/naxsi.rules
+#	PASS=
+#	echo "LearningMode is disabled - Blocking requests"
+#	else
+#	echo "LearningMode is enabled"
+#fi
+
 #Change owner for log files
 if [ -d /var/log/nginx ]
 	then
@@ -35,4 +45,7 @@ if [ -d /var/log/nginx ]
 	fi
 
 
-nginx -c /etc/nginx/nginx.conf
+#nxtool.py --fifo=/var/log/nginx/naxsi-fifo > /dev/null 2>&1 &
+nginx -c /etc/nginx/nginx.conf 
+
+
