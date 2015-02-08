@@ -38,7 +38,8 @@ server {
         proxy_busy_buffers_size             256k;
         proxy_redirect              http://#proxy_redirect_ip#/ http://$host/;
         proxy_redirect              https://#proxy_redirect_ip#/ https://$host/;
-
+	
+	set $naxsi_extensive_log 1;
 
 	location / {
 		include /etc/nginx/naxsi.rules;
