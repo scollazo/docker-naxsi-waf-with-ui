@@ -16,7 +16,6 @@ The image  is built from source, using [nginx 1.7.9](http://nginx.org/download/)
 Elasticsearch isn't provided as part of this docker container, but but you can get official images by running:
 
     docker run --name my-elastic \
-               -p 9200:9200 -p 9300:9300 \
                -d elasticsearch:1.3.7
 
 Keep in mind that data saved to this server won't be persisted between restarts, if you want to do so, follow the [official docs](https://github.com/dockerfile/elasticsearch)

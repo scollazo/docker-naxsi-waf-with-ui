@@ -60,6 +60,7 @@ ADD nginx/kibana /etc/nginx/sites-enabled/kibana
 ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
 ADD naxsi/naxsi_dashboard.json /usr/local/kibana-3.1.2/app/dashboards/default.json
+ADD kibana/config.js /usr/local/kibana-3.1.2/config.js
 RUN mkdir /etc/nginx/local-config
 RUN mkdir -p /var/lib/nginx/body
 
