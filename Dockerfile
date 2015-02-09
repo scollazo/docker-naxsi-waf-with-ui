@@ -8,6 +8,7 @@ MAINTAINER Santiago Rodriguez <scollazo@gmail.com>
 #Change this and build the image to suit your needs by default, without needing to add parameters later
 ENV LEARNING_MODE yes
 ENV PROXY_REDIRECT_IP 12.34.56.78
+ENV ELASTICSEARCH_HOST elasticsearch
 
 #Software versions
 ENV NGINX_VERSION 1.7.9
@@ -58,6 +59,7 @@ ADD nginx/default /etc/nginx/sites-enabled/default
 ADD nginx/kibana /etc/nginx/sites-enabled/kibana
 ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
+ADD naxsi/naxsi_dashboard.json /usr/local/kibana-3.1.2/app/dashboards/default.json
 RUN mkdir /etc/nginx/local-config
 RUN mkdir -p /var/lib/nginx/body
 

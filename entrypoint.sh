@@ -28,7 +28,10 @@ if [ x${LEARNING_MODE} != x"yes" ]
 	echo "LearningMode is enabled"
 fi
 
-
+if [ x${ELASTICSEARCH_HOST} !=  x"elasticsearch" ]
+	then
+	sed -i "s/elasticsearch/${ELASTICSEARCH_HOST}/g" /usr/local/etc/nxapi.json
+	fi
 #if [ x${KIBANA_PASSWORD} != x"popo" ] 
 #	then
 #	#sed -i 's/LearningMode;//g' /etc/nginx/naxsi.rules
