@@ -63,6 +63,10 @@ ADD naxsi/naxsi_dashboard.json /usr/local/kibana-3.1.2/app/dashboards/default.js
 RUN mkdir /etc/nginx/local-config
 RUN mkdir -p /var/lib/nginx/body
 
+
+#UGLY HACK. See entrypoint.sh
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y logtail
+
 #Ports
 EXPOSE 80
 EXPOSE 8080
