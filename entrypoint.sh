@@ -18,7 +18,6 @@ else
 	sed -i "s#proxy_redirect_ip#${PROXY_REDIRECT_IP}#" /etc/nginx/sites-enabled/default
 fi
 
-echo  "Naxsi filtering requests to $PROXY_REDIRECT_IP"
 
 if [ x${LEARNING_MODE} != x"yes" ] 
 	then
@@ -47,9 +46,15 @@ if [ -d /var/log/nginx ]
 	chown www-data.www-data /var/log/nginx -R
 	fi
 
-echo "naxsi log collection disabled"
-#nxtool.py --fifo=/var/log/nginx/naxsi-fifo > /dev/null 2>&1 &
-nginx -c /etc/nginx/nginx.conf &
+if [ x"$1" = x"debug" ]
+	then
+		echo "Changed config files. Not starting any daemon"
+		exit 0
+	fi
+
+echo  "Naxsi filtering requests to $PROXY_REDIRECT_IP"
+
+nginx -c /etc/nginx/nginx.conf 
 
 ## Ugly hack, but I don't know how to get live logs from nginx to nxtool
 ## --stdin goes crazy (infinite loop)

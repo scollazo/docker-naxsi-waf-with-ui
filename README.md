@@ -42,4 +42,4 @@ If you find problems, or want to run the nxtool utility to [query the database](
                -p 80:80 -p 8080:8080 \
                --rm scollazo/naxsi-waf-with-ui:devel /bin/bash
 
-You may need to run the /entrypoint.sh by hand, as some configuration values are set by this script.
+You will need to run in this shell the command ``/entrypoint.sh debug``, as some configuration values are set by this script.
