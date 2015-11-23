@@ -27,7 +27,7 @@ Naxsi in launched in learning mode, and logs are feed to elasticsearch every fiv
 
 Run this image with:
 
-    docker run --env PROXY_REDIRECT_IP=10.0.0.1 \
+    docker run --env BACKEND_IP=10.0.0.1 \
                --link my-elastic:elasticsearch \
               -p 80:80 -p 8080:8080 \
               -d scollazo/naxsi-waf-with-ui:devel
@@ -36,7 +36,7 @@ Use your web, so the database get some data,  and then, go to http://your_host_i
 
 If you find problems, or want to run the nxtool utility to [query the database](https://github.com/nbs-system/naxsi/tree/master/nxapi#simple-usage-approach) you can get a shell by running:
 
-    docker run --env PROXY_REDIRECT_IP=10.0.0.1 \
+    docker run --env BACKEND_IP=10.0.0.1 \
                --link my-elastic:elasticsearch \
                -p 80:80 -p 8080:8080 \
                --rm scollazo/naxsi-waf-with-ui:devel /bin/bash

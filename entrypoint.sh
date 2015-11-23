@@ -8,14 +8,14 @@ if [ "$(find /etc/nginx/local-config -type f)" != "" ]
 
 #Check if we are asked to process old logs
 
-if [ x${PROXY_REDIRECT_IP} = x"12.34.56.78" ] 
+if [ x${BACKEND_IP} = x"12.34.56.78" ] 
 	then
-	echo "You need to set the PROXY_REDIRECT_IP"
+	echo "You need to set the BACKEND_IP"
 	echo "Run with:"
-	echo "    docker run -e PROXY_REDIRECT_IP=<your_backend_ip> -p 80:80 -p 8081:8081 scollazo/bla"
+	echo "    docker run -e BACKEND_IP=<your_backend_ip> -p 80:80 -p 8081:8081 scollazo/bla"
 	exit 1
 else
-	sed -i "s#proxy_redirect_ip#${PROXY_REDIRECT_IP}#" /etc/nginx/sites-enabled/default
+	sed -i "s#proxy_redirect_ip#${BACKEND_IP}#" /etc/nginx/sites-enabled/default
 fi
 
 
@@ -52,7 +52,7 @@ if [ x"$1" = x"debug" ]
 		exit 0
 	fi
 
-echo  "Naxsi filtering requests to $PROXY_REDIRECT_IP"
+echo  "Naxsi filtering requests to $BACKEND_IP"
 
 nginx -c /etc/nginx/nginx.conf 
 
