@@ -11,9 +11,9 @@ ENV PROXY_REDIRECT_IP 12.34.56.78
 ENV ELASTICSEARCH_HOST elasticsearch
 
 #Software versions
-ENV NGINX_VERSION 1.7.9
+ENV NGINX_VERSION 1.9.10
 ENV NAXSI_VERSION master
-ENV KIBANA_VERSION 3.1.2
+ENV KIBANA_VERSION 3.1.3
 
 #Install needed packages from repos
 RUN apt-get update &&\
@@ -59,8 +59,9 @@ ADD nginx/default /etc/nginx/sites-enabled/default
 ADD nginx/kibana /etc/nginx/sites-enabled/kibana
 ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
-ADD naxsi/naxsi_dashboard.json /usr/local/kibana-3.1.2/app/dashboards/default.json
-ADD kibana/config.js /usr/local/kibana-3.1.2/config.js
+ADD naxsi/naxsi_dashboard.json /usr/local/kibana-${KIBANA_VERSION}/app/dashboards/default.json
+ADD kibana/config.js /usr/local/kibana-${KIBANA_VERSION}/config.js
+RUN ln -s /usr/local/kibana-${KIBANA_VERSION} /usr/local/kibana
 RUN mkdir /etc/nginx/local-config
 RUN mkdir -p /var/lib/nginx/body
 

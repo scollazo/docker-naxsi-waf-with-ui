@@ -1,6 +1,9 @@
 # docker-naxsi-waf-with-ui
 
-# About cutting-edge branch
+# About naxsi-kibana3 branch
+
+## Important notice:
+### This image needs old versions of  elasticsearch and kibana
 
 This docker image is intented to test and understand nxapi/nxtool, the new lerning tool for naxsi logs that attempts to perform the following :
 
@@ -10,13 +13,18 @@ This docker image is intented to test and understand nxapi/nxtool, the new lerni
  * Reporting : Display information about current DB content
 
 
-The image  is built from source, using [nginx 1.7.9](http://nginx.org/download/) and  [naxsi](https://github.com/nbs-system/naxsi) master branch.
+The image  is built from source, using [nginx 1.9.10](http://nginx.org/download/) and  [naxsi](https://github.com/nbs-system/naxsi) master branch.
+
 
 
 Elasticsearch isn't provided as part of this docker container, but but you can get official images by running:
 
     docker run --name my-elastic \
                -d elasticsearch:1.3.7
+
+** Remember: only 1.3.X versions will work**
+
+
 
 Keep in mind that data saved to this server won't be persisted between restarts, if you want to do so, follow the [official docs](https://github.com/dockerfile/elasticsearch)
 
