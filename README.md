@@ -2,6 +2,8 @@
 
 # About cutting-edge branch
 
+Run the latest version of the [naxsi WAF](https://github.com/nbs-system/naxsi), with the ability to analyze the data set by using the searching/aggregation capabilities of Elasticseach and the visualization power of Kibana
+
 This docker image is intented to test and understand nxapi/nxtool, the new lerning tool for naxsi logs that attempts to perform the following :
 
  * Events import : Importing naxsi events into an elasticsearch database
@@ -10,35 +12,47 @@ This docker image is intented to test and understand nxapi/nxtool, the new lerni
  * Reporting : Display information about current DB content
 
 
-The image  is built from source, using [nginx 1.7.9](http://nginx.org/download/) and  [naxsi](https://github.com/nbs-system/naxsi) master branch.
+The image  is built from source, using [nginx 1.9.10](http://nginx.org/download/) and  [naxsi](https://github.com/nbs-system/naxsi) master branch.
 
+# Requirements
 
-Elasticsearch isn't provided as part of this docker container, but but you can get official images by running:
+## Setup
 
-    docker run --name my-elastic \
-               -d elasticsearch:1.3.7
+1. Install [Docker](http://docker.io).
+2. Install [Docker-compose](http://docs.docker.com/compose/install/).
+3. Clone this repository
+4. Edit the docker-compose.yml and set the ``BACKEND_IP`` to the server that will be protected by naxsi.
 
-Keep in mind that data saved to this server won't be persisted between restarts, if you want to do so, follow the [official docs](https://github.com/dockerfile/elasticsearch)
+# Usage
 
-If your elasticsearch is in another host, you must pass the variable ```ELASTICSEARCH_HOST`` to docker.
+Start the stack using *docker-compose*:
+
+```bash
+$ docker-compose up
+```
+
+You can also choose to run it in background (detached mode):
+
+```bash
+$ docker-compose up -d
+```
+
+By default, the stack exposes the following ports:
+* 80: Nginx with Naxsi, forwarding requests to BACKEND_IP
+* 5000: Logstash TCP input.
+* 9200: Elasticsearch HTTP
+* 9300: Elasticsearch TCP transport
+* 5601: Kibana
 
 
 Naxsi in launched in learning mode, and logs are feed to elasticsearch every five seconds in a non ideal way, due to issues found while using the methods provided to get live logs from nginx to nxtool/nxapi.
 
-Run this image with:
 
-    docker run --env BACKEND_IP=10.0.0.1 \
-               --link my-elastic:elasticsearch \
-              -p 80:80 -p 8080:8080 \
-              -d scollazo/naxsi-waf-with-ui:devel
+Use your web, so the database get some data,  and then, go to http://your_host_ip:5601 to see the reports using kibana.
 
-Use your web, so the database get some data,  and then, go to http://your_host_ip:8080 to see the reports using kibana.
+The data stored in Elasticsearch is persisted in ``./elasticsearch-data`` directory . This can be changed in docker-compose.yml
 
 If you find problems, or want to run the nxtool utility to [query the database](https://github.com/nbs-system/naxsi/tree/master/nxapi#simple-usage-approach) you can get a shell by running:
 
-    docker run --env BACKEND_IP=10.0.0.1 \
-               --link my-elastic:elasticsearch \
-               -p 80:80 -p 8080:8080 \
-               --rm scollazo/naxsi-waf-with-ui:devel /bin/bash
-
-You will need to run in this shell the command ``/entrypoint.sh debug``, as some configuration values are set by this script.
+    docker ps # Identify naxsi container id
+    docker exec -i -t <CONTAINER_ID> /bin/bash
