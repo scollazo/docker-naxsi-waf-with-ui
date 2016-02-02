@@ -1,5 +1,5 @@
 naxsi:
-  image: scollazo/naxsi-waf-with-ui:cutting-edge
+  image: scollazo/naxsi-waf-with-ui:latest
   ports:
     - "80:80"
   environment:
