@@ -5,6 +5,7 @@ naxsi:
     - "8080:8080"
   environment:
     BACKEND_IP: "93.184.216.34"
+    LEARNING_MODE: "yes"
   links:
     - elasticsearch
     - kibana
