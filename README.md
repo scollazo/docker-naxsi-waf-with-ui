@@ -21,7 +21,7 @@ The image  is built from source, using [nginx 1.9.10](http://nginx.org/download/
 1. Install [Docker](http://docker.io).
 2. Install [Docker-compose](http://docs.docker.com/compose/install/).
 3. Clone this repository
-4. Edit the docker-compose.yml and set the ``BACKEND_IP`` to the server that will be protected by naxsi.
+4. Edit the docker-compose.yml and set the ``BACKEND_IP`` to the server that will be protected by naxsi, and (optionally) ``KIBANA_PASSWORD`` if you want to protect access to dashboards. User is _kibana_
 
 # Usage
 
@@ -45,9 +45,9 @@ By default, the stack exposes the following ports:
 Naxsi in launched in learning mode, and logs are feed to elasticsearch every five seconds in a non ideal way, due to issues found while using the methods provided to get live logs from nginx to nxtool/nxapi.
 
 
-Use your web, so the database get some data,  and then, go to http://your_host_ip:8080 to see the reports using kibana.
+Use your web (browse http://your_host_ip) to populate the stack,  and then go to http://your_host_ip:8080 to see the reports using kibana.
 
-The data stored in Elasticsearch is persisted in ``./elasticsearch-data`` directory . This can be changed in docker-compose.yml
+The data stored in elasticsearch is persisted in ``./elasticsearch-data`` directory, and this can be changed in docker-compose.yml
 
 If you find problems, or want to run the nxtool utility to [query the database](https://github.com/nbs-system/naxsi/tree/master/nxapi#simple-usage-approach) you can get a shell by running:
 

@@ -31,14 +31,12 @@ if [ x${ELASTICSEARCH_HOST} !=  x"elasticsearch" ]
 	then
 	sed -i "s/elasticsearch/${ELASTICSEARCH_HOST}/g" /usr/local/etc/nxapi.json
 	fi
-#if [ x${KIBANA_PASSWORD} != x"popo" ] 
-#	then
-#	#sed -i 's/LearningMode;//g' /etc/nginx/naxsi.rules
-#	PASS=
-#	echo "LearningMode is disabled - Blocking requests"
-#	else
-#	echo "LearningMode is enabled"
-#fi
+
+if ! [ -z ${KIBANA_PASSWORD} ] && [ x${KIBANA_PASSWORD} != x ]
+        then
+                echo -e "kibana:`perl -le "print crypt(\"${KIBANA_PASSWORD}\","salt")"`" > /etc/nginx/htpasswd
+		sed -i 's/# auth/auth/g' /etc/nginx/sites-enabled/kibana
+        fi
 
 #Change owner for log files
 if [ -d /var/log/nginx ]

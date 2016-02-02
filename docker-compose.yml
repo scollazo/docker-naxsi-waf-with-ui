@@ -6,6 +6,7 @@ naxsi:
   environment:
     BACKEND_IP: "93.184.216.34"
     LEARNING_MODE: "yes"
+    # KIBANA_PASSWORD: "your-supersecret-password"
   links:
     - elasticsearch
     - kibana
