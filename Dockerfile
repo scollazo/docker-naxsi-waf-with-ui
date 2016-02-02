@@ -63,7 +63,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y logtail 
 EXPOSE 80
 EXPOSE 8080
 
-COPY entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod 755 /docker-entrypoint.sh
 
 CMD ["/docker-entrypoint.sh"]
