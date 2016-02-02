@@ -7,13 +7,12 @@ MAINTAINER Santiago Rodriguez <scollazo@gmail.com>
 
 #Change this and build the image to suit your needs by default, without needing to add parameters later
 ENV LEARNING_MODE yes
-ENV PROXY_REDIRECT_IP 12.34.56.78
+ENV BACKEND_IP 12.34.56.78
 ENV ELASTICSEARCH_HOST elasticsearch
 
 #Software versions
-ENV NGINX_VERSION 1.7.9
+ENV NGINX_VERSION 1.9.10
 ENV NAXSI_VERSION master
-ENV KIBANA_VERSION 3.1.2
 
 #Install needed packages from repos
 RUN apt-get update &&\
@@ -48,25 +47,17 @@ RUN cd /usr/local/naxsi-${NAXSI_VERSION} && \
      pip install -r requirements.txt && \
      python setup.py install
 
-#Install kibana     
-RUN cd /usr/local && \
-    wget "https://download.elasticsearch.org/kibana/kibana/kibana-${KIBANA_VERSION}.tar.gz" && \
-    tar zxvf kibana-${KIBANA_VERSION}.tar.gz 
- 
 #Configuration files
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
 ADD nginx/default /etc/nginx/sites-enabled/default
-ADD nginx/kibana /etc/nginx/sites-enabled/kibana
 ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
-ADD naxsi/naxsi_dashboard.json /usr/local/kibana-3.1.2/app/dashboards/default.json
-ADD kibana/config.js /usr/local/kibana-3.1.2/config.js
 RUN mkdir /etc/nginx/local-config
 RUN mkdir -p /var/lib/nginx/body
 
 
 #UGLY HACK. See entrypoint.sh
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y logtail
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y logtail curl
 
 #Ports
 EXPOSE 80

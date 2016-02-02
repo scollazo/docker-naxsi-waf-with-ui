@@ -52,9 +52,17 @@ if [ x"$1" = x"debug" ]
 		exit 0
 	fi
 
+
+	# Wait for the Elasticsearch container to be ready before starting nginx
+	echo "Stalling for Elasticsearch"
+	while true; do
+		    nc -q 1 elasticsearch 9200 2>/dev/null && break
+	    done
+
 echo  "Naxsi filtering requests to $BACKEND_IP"
 
 nginx -c /etc/nginx/nginx.conf 
+
 
 ## Ugly hack, but I don't know how to get live logs from nginx to nxtool
 ## --stdin goes crazy (infinite loop)

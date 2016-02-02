@@ -1,0 +1,28 @@
+naxsi:
+  image: scollazo/naxsi-waf-with-ui:cutting-edge
+  ports:
+    - "80:80"
+  environment:
+    BACKEND_IP: "127.0.0.2"
+  links:
+    - elasticsearch
+#  volumes:
+#    - naxsi_local_rules:/etc/nginx/naxsi_local_rules
+elasticsearch:
+  image: elasticsearch:latest
+  command: elasticsearch -Des.network.host=0.0.0.0
+  ports:
+    - "9200:9200"
+    - "9300:9300"
+  volumes:
+    - ./elasticsearch-data:/usr/share/elasticsearch/data
+kibana:
+  image: kibana:latest
+  command: gosu kibana kibana
+  volumes:
+    - ./kibana/kibana.yml:/opt/kibana/config/kibana.yml
+  ports:
+    - "5601:5601"
+  links:
+    - elasticsearch
+
