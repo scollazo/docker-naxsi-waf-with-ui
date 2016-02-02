@@ -16,7 +16,7 @@ ENV NAXSI_VERSION master
 
 #Install needed packages from repos
 RUN apt-get update &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget python-pip python-geoip && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget python-pip python-geoip logtail curl && \
     DEBIAN_FRONTEND=noninteractive apt-get build-dep -y nginx 
 
 #Get nginx and naxsi-ui
@@ -50,14 +50,11 @@ RUN cd /usr/local/naxsi-${NAXSI_VERSION} && \
 #Configuration files
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
 ADD nginx/default /etc/nginx/sites-enabled/default
+ADD nginx/kibana /etc/nginx/sites-enabled/kibana
 ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
 RUN mkdir /etc/nginx/local-config
 RUN mkdir -p /var/lib/nginx/body
-
-
-#UGLY HACK. See entrypoint.sh
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y logtail curl
 
 #Ports
 EXPOSE 80

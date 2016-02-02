@@ -39,16 +39,13 @@ $ docker-compose up -d
 
 By default, the stack exposes the following ports:
 * 80: Nginx with Naxsi, forwarding requests to BACKEND_IP
-* 5000: Logstash TCP input.
-* 9200: Elasticsearch HTTP
-* 9300: Elasticsearch TCP transport
-* 5601: Kibana
+* 8080: Kibana web UI
 
 
 Naxsi in launched in learning mode, and logs are feed to elasticsearch every five seconds in a non ideal way, due to issues found while using the methods provided to get live logs from nginx to nxtool/nxapi.
 
 
-Use your web, so the database get some data,  and then, go to http://your_host_ip:5601 to see the reports using kibana.
+Use your web, so the database get some data,  and then, go to http://your_host_ip:8080 to see the reports using kibana.
 
 The data stored in Elasticsearch is persisted in ``./elasticsearch-data`` directory . This can be changed in docker-compose.yml
 

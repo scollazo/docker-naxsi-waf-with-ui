@@ -1,59 +1,17 @@
- server {
+server {
         listen   8080; ## listen for ipv4; this line is default and implied
         #listen   [::]:8080 default ipv6only=on; ## listen for ipv6
 
-#        root /usr/local/kibana-3.1.2/;
-#        index index.html index.htm;
 
         # Make site accessible from http://localhost/
         server_name localhost;
         access_log /var/log/nginx/kibana-access.log;
 
         location / {
-        	root /usr/local/kibana-3.1.2;
-       		index index.html index.htm;
+                proxy_pass http://kibana:5601;
+                proxy_read_timeout 90;
+
+                #      auth_basic "Restricted";
+                #      auth_basic_user_file /etc/nginx/conf.d/kibana-write.htpasswd;
         }
-
-  	location ~ ^/_aliases$ {
-    		proxy_pass http://elasticsearch:9200;
-	        proxy_read_timeout 90;
-         }
-
- 	 location ~ ^/.*/_aliases$ {
-    		proxy_pass http://elasticsearch:9200;
-    		proxy_read_timeout 90;
-  	}
-  	location ~ ^/_nodes$ {
-    		proxy_pass http://elasticsearch:9200;
-    		proxy_read_timeout 90;
- 	 }
-  	location ~ ^/.*/_search$ {
-    		proxy_pass http://elasticsearch:9200;
-    		proxy_read_timeout 90;
- 	 }
-  	location ~ ^/.*/_mapping$ {
-  		proxy_pass http://elasticsearch:9200;
-    		proxy_read_timeout 90;
- 	 }
-
-	 # Password protected end points
-	 location ~ ^/kibana-int/dashboard/.*$ {
-   		proxy_pass http://elasticsearch:9200;
-    		proxy_read_timeout 90;
-	        # limit_except GET {
-		#      proxy_pass http://elasticsearch:9200;
-		#      auth_basic "Restricted";
-		#      auth_basic_user_file /etc/nginx/conf.d/kibana-write.htpasswd;
-		# }
-	  }
- 	 location ~ ^/kibana-int/temp.*$ {
-    		proxy_pass http://elasticsearch:9200;
-  		proxy_read_timeout 90;
-		# limit_except GET {
-		#      proxy_pass http://elasticsearch:9200;
-		#      auth_basic "Restricted";
-		#      auth_basic_user_file /etc/nginx/conf.d/kibana-write.htpasswd;
-		#    }
-  }
 }
-
