@@ -49,11 +49,10 @@ RUN cd /usr/local/naxsi-${NAXSI_VERSION} && \
 
 #Configuration files
 ADD nginx/nginx.conf /etc/nginx/nginx.conf
-ADD nginx/default /etc/nginx/sites-enabled/default
-ADD nginx/kibana /etc/nginx/sites-enabled/kibana
+ADD nginx/sites-enabled/* /etc/nginx/sites-enabled/
 ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
-RUN mkdir /etc/nginx/local-config
+RUN mkdir /etc/nginx/naxsi-local-rules
 RUN mkdir -p /var/lib/nginx/body
 
 #Ports

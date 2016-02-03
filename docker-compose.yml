@@ -10,8 +10,8 @@ naxsi:
   links:
     - elasticsearch
     - kibana
-#  volumes:
-#    - naxsi_local_rules:/etc/nginx/naxsi_local_rules
+  volumes:
+    - ./nginx/naxsi-local-rules:/etc/nginx/naxsi-local-rules
 
 elasticsearch:
   image: elasticsearch:latest

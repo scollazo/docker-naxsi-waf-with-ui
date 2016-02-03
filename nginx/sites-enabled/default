@@ -43,6 +43,7 @@ server {
 
 	location / {
 		include /etc/nginx/naxsi.rules;
+		include /etc/nginx/naxsi-local-rules/*.rules;
 		proxy_read_timeout              1800s;
         	proxy_pass              http://proxy_redirect_ip;
 	}

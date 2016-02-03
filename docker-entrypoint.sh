@@ -1,10 +1,4 @@
 #!/bin/bash
-#Check for local config files
-if [ "$(find /etc/nginx/local-config -type f)" != "" ] 
-	 then 
-	sed -i 's%include /etc/nginx/naxsi.rules;%include /etc/nginx/naxsi.rules;\n\t\tinclude /etc/nginx/local-rules/*;%g' /etc/nginx/sites-enabled/default
-	 fi
-
 
 #Check if we are asked to process old logs
 
