@@ -16,8 +16,9 @@ ENV NAXSI_VERSION master
 
 #Install needed packages from repos
 RUN apt-get update &&\
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget python-pip python-geoip logtail curl && \
-    DEBIAN_FRONTEND=noninteractive apt-get build-dep -y nginx 
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+					    wget python-pip python-geoip logtail curl \
+					    gcc make libpcre3-dev libssl-dev 
 
 #Get nginx and naxsi-ui
 RUN cd /usr/local/ && \
