@@ -53,20 +53,12 @@ if [ x"$1" = x"debug" ]
 
 echo  "Naxsi filtering requests to $BACKEND_IP"
 
-nginx -c /etc/nginx/nginx.conf 
-
-
 ## Ugly hack, but I don't know how to get live logs from nginx to nxtool
 ## --stdin goes crazy (infinite loop)
 ## --fifo goes crazy too 
 ## --syslog didn't work for me with nginx 1.7.9 and
 ## 	nginx.conf: error_log syslog=localhost:51400 debug;
-## So I used logtail, and --file
-sh -c 'while $(pidof nginx > /dev/null) 
-	 do 
-	 logtail /var/log/nginx/error.log > current && nxtool.py --file=current && rm -f current
-	 sleep 5
-	 done'
+## So I used logtail, and --file 
 
-
+/usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
 

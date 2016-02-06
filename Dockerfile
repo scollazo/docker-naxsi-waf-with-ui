@@ -18,7 +18,8 @@ ENV NAXSI_VERSION master
 RUN apt-get update &&\
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 					    wget python-pip python-geoip logtail curl \
-					    gcc make libpcre3-dev libssl-dev 
+					    gcc make libpcre3-dev libssl-dev \
+					    supervisor
 
 #Get nginx and naxsi-ui
 RUN cd /usr/local/ && \
@@ -55,6 +56,10 @@ ADD naxsi/naxsi.rules /etc/nginx/naxsi.rules
 ADD naxsi/nxapi.json /usr/local/etc/nxapi.json
 RUN mkdir /etc/nginx/naxsi-local-rules
 RUN mkdir -p /var/lib/nginx/body
+RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /etc/supervisor/conf.d/
+ADD supervisor/supervisord.conf /etc/supervisor/supervisord.conf
+ADD supervisor/conf.d/* /etc/supervisor/conf.d/
 
 #Ports
 EXPOSE 80
