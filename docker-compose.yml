@@ -15,7 +15,7 @@ naxsi:
 
 elasticsearch:
   image: elasticsearch:latest
-  command: elasticsearch -Des.network.host=0.0.0.0
+  command: elasticsearch -Enetwork.host=0.0.0.0
 # Uncomment to allow access from network
 #  ports:
 #    - "9200:9200"
