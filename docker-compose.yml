@@ -14,7 +14,7 @@ naxsi:
     - ./nginx/naxsi-local-rules:/etc/nginx/naxsi-local-rules
 
 elasticsearch:
-  image: elasticsearch:latest
+  image: elasticsearch:7.11.1
   command: elasticsearch -Enetwork.host=0.0.0.0
 # Uncomment to allow access from network
 #  ports:
@@ -24,7 +24,7 @@ elasticsearch:
     - ./elasticsearch-data:/usr/share/elasticsearch/data
 
 kibana:
-  image: kibana:latest
+  image: kibana:7.11.1
   command: gosu kibana kibana
   volumes:
     - ./kibana/kibana.yml:/opt/kibana/config/kibana.yml
